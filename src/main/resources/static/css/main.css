@@ -1,0 +1,26 @@
+body { font-family: 'Barlow Semi Condensed', sans-serif; }
+.sis-search-icon { background-image: url("../imgs/search-solid.svg"); background-repeat: no-repeat; background-position: center; background-size: calc(100% - 5px); }
+.sis-required:after { content: " *"; color: red; }
+.table-field { display: none; background: transparent; border: transparent; }
+.form-row { padding-bottom: 15px; }
+.sis-help { background: #003366; color: white; height: 20px; width: 20px; text-align: center; border-radius: 50px; cursor: pointer; }
+.sis-help-box { visibility: hidden; position: absolute; padding: 10px; border-radius: 5px; font-size: 1em; z-index: 1; font-size: 14px; color: Black; background-color: White; border: 0.7px solid; text-align: left; width: -webkit-fit-content; height: -webkit-fit-content; transition: all .4s linear; }
+.sis-help-box:hover { visibility: visible; }
+.sis-help:hover .sis-help-box { visibility: visible; }
+.loader { border: 16px solid #f3f3f3; border-radius: 50%; border-top: 16px solid blue; border-bottom: 16px solid blue; width: 120px; height: 120px; -webkit-animation: spin 2s linear infinite; animation: spin 2s linear infinite; }
+
+@-webkit-keyframes spin {
+	0% { -webkit-transform: rotate(0deg); }
+	100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+	0% { transform: rotate(0deg); }
+	100% { transform: rotate(360deg); }
+}
+
+@media only screen and (max-width:500px) {
+	.div-table { overflow: scroll; }
+	.div-table table { width: 100%; }
+	.form-row { padding-bottom: 0px; }
+	.form-control { margin-bottom: 15px; }
+}

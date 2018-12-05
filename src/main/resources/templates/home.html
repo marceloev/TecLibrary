@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:replace="fragments/header :: header"></div>
+        <!-- Específicos -->
+        <link rel="stylesheet" type="text/css" href="../static/css/home.css" th:href="@{../css/home.css}">
+        <script type="text/javascript" src="../static/js/home.js" th:src="@{../js/home.js}"></script>
+    </head>
+    <body>
+    <form id="search-form" th:action="@{/home}" method="GET"></form>
+    <div class="wrapper">
+        <nav id="sidebar" class="active">
+            <div class="sidebar-header">
+                <a href="#" th:href="@{/home}">
+                    <h3><u>TecLibrary</u></h3>
+                    <p class="col-12" th:text="${name}"></p>
+                </a>
+            </div>
+            <ul class="list-unstyled components">
+                <p>Painel de Controle</p>
+                <li>
+                    <a th:href="@{/detalhes-feed}">Acompanhar Feed's</a>
+                </li>
+                <li class="active">
+                    <a href="#generoSubmenuList" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Gêneros</a>
+                    <ul class="collapse list-unstyled" id="generoSubmenuList">
+                        <li th:each="genero : ${generosList}">
+                            <a th:text="${genero.descricao}" th:href="'/genero/' + ${genero.codigo}"></a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <!--<a th:href="@{/promocao/}">Em promoção</a>-->
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
+                    class="dropdown-toggle" th:if="${ROLE_MANAGER}">Cadastros</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a th:href="@{/cadastro/livros}">Livros</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/cadastro/generos}">Gêneros</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/cadastro/precos}">Preços de Venda</a>
+                        </li>
+                        <!--<li>
+                            <a th:href="@{/cadastro/promocoes}">Promoções</a>
+                        </li>-->
+                        <li>
+                            <a th:href="@{/cadastro/usuarios}">Usuários</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#pageSubCachemenu" data-toggle="collapse" aria-expanded="false"
+                       class="dropdown-toggle" th:if="${ROLE_MANAGER}">Cache</a>
+                    <ul class="collapse list-unstyled" id="pageSubCachemenu">
+                        <li>
+                            <a th:href="@{/clear-file-cache}">Limpar cache: Imagens/PDF's</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/clear-preco-cache}">Limpar cache: Preços Líquido/Bruto</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/clear-cache}">Limpar cache: Todos</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" onclick="showChangePasswordDialog();">Alterar sua senha</a>
+                </li>
+                <li>
+                    <a href="https://github.com/marceloev" target="_blank">Contato</a>
+                </li>
+            </ul>
+            <ul class="list-unstyled CTAs">
+                <li>
+                    <a href="https://bootstrapious.com/p/bootstrap-sidebar" th:href="@{/logout}"
+                    class="article">Deslogar</a>
+                </li>
+            </ul>
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-expand-lg" style="background-color: #DADADA;">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn active">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    </button>
+                    <div id="logo" class="col-md-2 col-sm-2 col-xs-8 col-8 text-center">
+                        <a href="/home">
+                            <h3><u>TecLibrary</u></h3>
+                        </a>
+                    </div>
+                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="nav navbar-nav ml-auto" style="width: 100%;">
+                            <li class="nav-item" style="width: 100%;">
+                                <div class="row">
+                                    <hr class="w-100" id="separator">
+                                    <div class="col-md-12 col-sm-12 col-xs-12 col-12 input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text sis-search-icon" id="basic-addon1" style="width: 30px;"></span>
+                                        </div>
+                                        <input class="form-control" type="search" id="search" name="search"
+                                        th:value="${search}"
+                                        placeholder="Pesquise aqui algum livro" autofocus form="search-form">
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" th:if="${error}">
+                <p th:text="${error}"></p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="alert alert-info alert-dismissible fade show" role="alert" th:if="${info}">
+                <p th:text="${info}"></p>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="book-list" class="row" th:value="${ROLE_MANAGER} ? 'true' : 'false'">
+                <div class="col-md-3 col-sm-3 col-xs-12 col-12" th:each="livro : ${livroList}">
+                    <div class="book row" ondblclick="openDetails(this.id)" th:id="${livro.codigo}">
+                        <div class="book-left col-md-4 col-sm-4 col-xs-4 col-4">
+                            <img class="book-image" th:src="'/imagens/' + ${livro.codigo}">
+                        </div>
+                        <div class="book-right col-md-8 col-sm-8 col-xs-8 col-8">
+                            <div class="book-title">
+                                <span class="d-inline-block" tabindex="0" data-toggle="tooltip"
+                                    th:title="${livro.descricao}">
+                                    <a class="book-title"
+                                       th:href="${ROLE_MANAGER} ? '/livro/' + ${livro.codigo} : '/detalhes-livro/' + ${livro.codigo}"
+                                       th:text="${livro.descricao}"></a>
+                                </span>
+                            </div>
+                            <div class="book-details">
+                                <p th:text="${livro.resenha}"></p>
+                            </div>
+                            <div class="book-price">
+                                <span>
+                                    <i class="fas fa-dollar-sign"></i><a th:text="' ' + ${livro.getPreco()}">5.0</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

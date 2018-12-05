@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:replace="fragments/header :: header"></div>
+        <!-- Específicos -->
+        <link rel="stylesheet" type="text/css" href="../static/css/cadastrarLivro.css" th:href="@{../css/cadastrarLivro.css}">
+        <script type="text/javascript" src="../static/js/cadastrarLivro.js" th:src="@{../js/cadastrarLivro.js}"></script>
+    </head>
+    <body>
+    <form id="return" th:action="@{/home}" th:method="GET"></form>
+    <form id="livroForm" th:action="@{/cadastro/livros}" th:method="POST" th:object="${livro}" enctype="multipart/form-data">
+        <div class="card">
+            <div class="card-header text-center py-1">
+                <button class="col-sm-1 col-3 btn btn-warning float-left" form="return" style="z-index: 1">
+                <i class="fas fa-long-arrow-alt-left"></i>Voltar</button>
+                <button id="sendPreco" type="button" class="col-sm-2 col-5 btn btn-outline-danger float-right" th:if="${livro.codigo} > 0"
+                style="z-index: 1;" th:onclick="'deleteLivro(\'' +${livro.codigo} +'\',\''+${livro.descricao}+'\')'">Excluir
+                <i class="fas fa-minus"></i>
+                </button>
+                <h3 class="col-sm-12 col-12 text-center font-weight-bold">Cadastro de Livros</h3>
+            </div>
+            <div class="modal fade" id="confirmReset" tabindex="-1" role="dialog" aria-labelledby="confirmReset" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmReset">TecLibrary:</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Deseja realmente limpar os campos deste formulário?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="resetForm()">Limpar</button>
+                            <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}" style="margin: 5px;">
+                <h6 class="alert-heading">Houveram alguns problemas, veja abaixo:</h6>
+                <hr>
+                <div th:each="detailedError : ${#fields.detailedErrors()}">
+                    <span th:text="${detailedError.message}"></span>
+                </div>
+            </div>
+            <div class="alert alert-danger" th:if="${error}" style="margin: 5px;">
+                <p th:text="${error}"></p>
+            </div>
+            <div class="alert alert-info" th:if="${msg}" style="margin: 5px;">
+                <p th:text="${msg}"></p>
+            </div>
+            <div class="card-body col-md-12 row">
+                <div class="col-md-4 text-center">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                <input type="file" id="imgInp" name="imgInp" accept="image/*">
+                            </span>
+                        </span>
+                    </div>
+                    <img id="img-upload" class="img-thumbnail" required
+                         th:src="(${livro.codigo != 0} ? '/imagens/' + ${livro.codigo} : '')"/>
+                    <hr>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <span class="btn btn-default btn-file">
+                                <input type="file" id="pdfInp" name="pdfInp" accept="application/pdf">
+                            </span>
+                        </span>
+                    </div>
+                    <div th:switch="${livro.hasPDF()}" class="float-left" style="padding-left: 15px;">
+                        <span th:case="'S'"><strong>Arquivo PDF inserido.</strong></span>
+                        <span th:case="*"><strong>Arquivo PDF não inserido.</strong></span>
+                    </div>
+                </div>
+                <div class="col-md-8 form-group">
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <label class="sis-required" for="codigo">Código: </label>
+                            <input type="text" id="codigo" class="form-control" name="codigo"
+                            readonly th:field="${livro.codigo}" th:value="${livro.codigo}">
+                        </div>
+                        <div class="col-md-3">
+                            <label class="sis-required" for="dataPublicacao">Data de Publicação: </label>
+                            <input type="date" id="dataPublicacao" class="form-control" name="dataPublicacao"
+                            autofocus required th:field="${livro.dataPublicacao}" th:value="${livro.dataPublicacao}">
+                        </div>
+                        <div class="col-md-5 col-10">
+                            <label class="sis-required" for="codigoBarra">Código de Barras: </label>
+                            <input type="number" id="codigoBarra" class="form-control" name="codigoBarra"
+                                   required th:field="${livro.codigoBarra}" th:value="${livro.codigoBarra}">
+                        </div>
+                        <div class="col-md-1 col-2">
+                            <label for="btnPreview">Preview: </label>
+                            <button type="button" class="btn btn-outline-info w-100" name="btnPreview"
+                                    th:disabled="${livro.codigo}  == 0"
+                                    th:id="${livro.codigo}"
+                                    onclick="detalhesLivro(this.id);">
+                                <i class="far fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label class="sis-required" for="descricao">Descrição: </label>
+                            <input type="text" id="descricao" class="form-control" name="descricao"
+                            required th:field="${livro.descricao}" th:value="${livro.descricao}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <br/>
+                            <button type="button" class="btn btn-info"
+                            data-toggle="collapse" data-target="#generosDIV" onclick="expand();">Classificar em Gêneros
+                            <strong id="expandable">&#9660</strong>
+                            </button>
+                            <div id="generosDIV" class="collapse">
+                                <hr>
+                                <div id="generoListDIV">
+                                    <label class="checkbox-genero checkbox-inline text-center" th:each="genero : ${generos}">
+                                        <input type="checkbox" th:text="${genero.descricao}" th:value="${genero.codigo}" th:field="*{generos}">
+                                    </label>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label for="resenha">Resenha: </label>
+                            <textarea class="form-control" id="resenha" name="resenha" rows="3" maxlength="255"
+                            th:field="${livro.resenha}" th:value="${livro.resenha}"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label class="sis-required" for="sinopse">Sinopse: </label>
+                            <textarea class="form-control" id="sinopse" name="sinopse" rows="4" maxlength="4000"
+                            required th:field="${livro.sinopse}" th:value="${livro.sinopse}"></textarea>
+                        </div>
+                    </div>
+                    <div id="card-buttons" class="form-row">
+                        <div class="col-md-12">
+                            <button class="btn btn-success">Salvar</button>
+                            <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#confirmReset">Limpar campos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

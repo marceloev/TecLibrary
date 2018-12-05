@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>TecLibrary</title>
+		<!-- Tag's de responsividade -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Imagem logo-->
+		<link rel="shortcut icon" type="image/x-icon" href="../static/imgs/teclibrary.png" th:href="@{../imgs/teclibrary.png}">
+		<!-- Arquivos de CSS importados -->
+		<link href="https://fonts.googleapis.com/css?family=Barlow+Semi+Condensed" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+		<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+		<!-- Arquivos de CSS customizados -->
+		<link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{../css/main.css}">
+		<!-- Arquivos de JS importados-->
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+		<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="http://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+		<script src="../static/js/jquery.mask.js" th:src="@{../js/jquery.mask.js}"></script>
+		<script src="../static/js/main.js" th:src="@{../js/main.js}"></script>
+		<!-- Arquivos de JS customizados-->
+		<script type="text/javascript" src="../static/js/sis-table.js" th:src="@{../js/sis-table.js}"></script>
+	</head>
+	<style type="text/css">
+		.book-image { height: 100%; max-width: 100px; padding: 3px; }
+	.book-title { color: cornflowerblue; text-align: center; font-size: 14px; overflow: hidden; text-overflow: ellipsis; line-height: 14px; max-height: 28px; }
+	.book-details { padding-top: 5px; overflow-y: auto; overflow-x: hidden; text-overflow: ellipsis; font-size: 12.5px; display: -webkit-box; line-height: 12.5px; max-height: 94px; margin-left: 8px; }
+	.book-price { margin-left: 8px; text-decoration: underline; }
+	</style>
+	<body>
+		<div class="row">
+			<div class="book row" ondblclick="openDetails(this.id)" id="6">
+				<div class="col-md-4 col-sm-4 col-xs-4 col-4">
+					<img class="book-image" src="localhost:9092/imagens/0000000000006.png">
+				</div>
+				<div class="col-md-8 col-sm-8 col-xs-8 col-8">
+					<div class="book-title">
+						<span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Diário de Anne Frank">
+							<a class="book-title" href="/livro/6">Diário de Anne Frank</a>
+						</span>
+					</div>
+					<div class="book-details">
+						<p>O Diário de Anne Frank é um livro escrito por Annelies Marie Frank entre 12 de junho de 1942 e 1.º de agosto de 1944 durante a Segunda Guerra Mundial. Em 9 de julho de 1942, Anne, seus pais, sua irmã e outros judeus se esconderam em um Anexo secreto</p>
+					</div>
+					<div class="book-price">
+						<span>
+							<i class="fas fa-dollar-sign"></i><a> 33,90</a>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

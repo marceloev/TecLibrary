@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<div th:replace="fragments/header :: header"></div>
+		<!-- Específicos -->
+		<link rel="stylesheet" type="text/css" href="../static/css/cadastrarLivro.css" th:href="@{../css/cadastrarLivro.css}">
+		<script type="text/javascript" src="../static/js/cadastrarLivro.js" th:src="@{../js/cadastrarLivro.js}"></script>
+	</head>
+	<body onload="loadTableData('#tablePrecos')">
+	<form id="return" th:action="@{/home}" th:method="GET"></form>
+	<form th:action="@{/cadastro/precos}" method="POST" th:object="${PrecoList}">
+		<div class="card">
+			<h3 class="card-header text-center font-weight-bold py-2">
+			<button class="btn btn-warning float-left" form="return">
+			<i class="fas fa-long-arrow-alt-left"></i>
+			Voltar
+			</button>
+			Controle de Preços de Vendas
+			<button id="sendPreco" type="submit" class="btn btn-success float-right" disabled>Enviar Novos Preços
+			<i class="fas fa-check"></i>
+			</button>
+			</h3>
+			<div class="alert alert-danger" role="alert" th:if="${error}" style="margin: 5px;">
+				<h6>
+				<strong>Houve um erro ao tentar atualizar os preços.</strong>
+				<p th:text="${error}"></p>
+				</h6>
+			</div>
+			<div class="alert alert-info" role="alert" th:if="${msg}" style="margin: 5px;">
+				<h6><strong th:text="${msg}"></strong></h6>
+			</div>
+			<div class="card-body">
+				<div id="table" class="table-editable">
+					<table id="tablePrecos" class="table table-striped table-bordered table-hover table-sm text-center"
+						>
+						<thead>
+							<tr>
+								<th class="text-center">#</th>
+								<th class="text-center">Descrição</th>
+								<th class="text-center">Código de Barras</th>
+								<th class="text-center">Preço</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="item" th:each="book, itemStat : *{precoProdutoList}">
+								<input class="table-field" th:field="*{precoProdutoList[__${itemStat.index}__].codigo}">
+								<td class="pt-3-half" th:text="*{precoProdutoList[__${itemStat.index}__].codigo}">25</td>
+								<input class="table-field" th:field="*{precoProdutoList[__${itemStat.index}__].descricao}">
+								<td class="pt-3-half" th:text="*{precoProdutoList[__${itemStat.index}__].descricao}">SCRUM: A Arte de Fazer o Dobro</td>
+								<input class="table-field" th:field="*{precoProdutoList[__${itemStat.index}__].codigoBarra}">
+								<td class="pt-3-half" th:text="*{precoProdutoList[__${itemStat.index}__].codigoBarra}">0121546514649874654</td>
+								<td class="pt-3-half" style="width: 150px;">
+									<input type="text" class="precoField form-control text-center"
+									data-prefix="R$ " data-thousands="." data-decimal=","
+									th:field="*{precoProdutoList[__${itemStat.index}__].preco}">
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+	$('.precoField').maskMoney();
+	$(".precoField").keypress("keypress", (event) => {
+		document.getElementById("sendPreco").removeAttribute("disabled");
+});
+</script>
+</html>

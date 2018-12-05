@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <div th:replace="fragments/header :: header"></div>
+</head>
+<body onload="loadTableData('#tableFeeds');">
+<form id="return" th:action="@{/home}" th:method="GET"></form>
+<form th:action="@{/detalhes-feed}" method="GET" th:object="${feeds}">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <button class="btn btn-warning float-left" form="return">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                    Voltar
+                </button>
+                <h3 class="text-center font-weight-bold">Lista de Feed's</h3>
+            </div>
+        </div>
+        <div class="card-body">
+            <div id="table" class="table-editable div-table">
+                <h6 class="text-center font-weight-bold"><u>Tabela de Feed's</u></h6>
+                <table id="tableFeeds"
+                       class="table table-striped table-bordered table-hover table-sm text-center">
+                    <thead>
+                    <tr>
+                        <th class="text-center">#</th>
+                        <th class="text-center">Livro » ID</th>
+                        <th class="text-center">Livro » Descrição</th>
+                        <th class="text-center">Livro » Código Barra</th>
+                        <th class="text-center">Usuário » Login</th>
+                        <th class="text-center">Usuário » Nome</th>
+                        <th class="text-center">Resumo</th>
+                        <th class="text-center">Problema</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="item" th:each="feed : ${feeds}">
+                        <td class="pt-3-half" th:text="${feed.codigo}"></td>
+                        <td class="pt-3-half" th:text="${feed.livro.codigo}"></td>
+                        <td class="pt-3-half" th:text="${feed.livro.descricao}"></td>
+                        <td class="pt-3-half" th:text="${feed.livro.codigoBarra}"></td>
+                        <td class="pt-3-half" th:text="${feed.user.login}"></td>
+                        <td class="pt-3-half" th:text="${feed.user.nome}"></td>
+                        <td class="pt-3-half" th:text="${feed.resumo}"></td>
+                        <td class="pt-3-half" th:text="${feed.problema}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

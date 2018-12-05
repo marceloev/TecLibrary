@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <div th:replace="fragments/header :: header"></div>
+        <!-- Arquivos de JS específicos -->
+        <script type="text/javascript" src="../static/js/detalhesLivro.js" th:src="@{../js/detalhesLivro.js}"></script>
+        <!-- Arquivos de CSS específicos -->
+        <link rel="stylesheet" type="text/css" href="../static/css/detalhesLivro.css" th:href="@{../css/detalhesLivro.css}">
+    </head>
+    <body>
+    <form id="return" th:action="@{/home}" th:method="GET"></form>
+    <form th:action="@{/detalhesLivro}" method="POST" th:object="${livro}">
+        <div id="root" class="row">
+            <div id="header-content" class="text-center">
+                <button class="col-sm-1 col-3 btn btn-warning float-left" form="return"
+                        style="z-index: 1; margin-left: 5px;">
+                    <i class="fas fa-long-arrow-alt-left"></i>
+                    Voltar
+                </button>
+                <h3 class="col-sm-12 col-12 font-weight-bold">Detalhes de Livro</h3>
+            </div>
+            <div id="left-content" class="col-lg-6 col-md-6 col-xs-12 col-12">
+                <div id="left-content-root">
+                    <img class="img-detail" th:src="'/imagens/' + ${livro.codigo}">
+                </div>
+            </div>
+            <div id="right-content" class="col-lg-6 col-md-6 col-xs-12 col-12">
+                <div id="right-content-root">
+                    <div class="detail-title text-center">
+                        <input type="text" name="codigo" id="codigo" th:value="${livro.codigo}" hidden>
+                        <hr>
+                        <h4 th:text="${livro.descricao}">Star Wars: Episódio IX</h4>
+                    </div>
+                    <hr>
+                    <div class="detail-sinopse">
+                        <p class="detail-title">Sinopse:</p>
+                        <p class="detail-title-text" th:text="${livro.sinopse}">Star Wars: Episódio IX</p>
+                    </div>
+                    <hr>
+                    <div class="detail-generos">
+                        <p class="detail-title">Categorias deste livro:</p>
+                        <a th:each="genero : ${livro.generos}" th:href="'/genero/' + ${genero.codigo}"
+                        th:text="' ' + ${genero.descricao} + ','">Literatura Fantástica</a>
+                    </div>
+                    <hr>
+                    <div class="detail-options row">
+                        <button type="button" class="btn btn-outline-info col-md-3 col-sm-3 col-12"
+                        onclick="doDownload();"
+                        th:disabled="${livro.hasPDF()} == 'N'">
+                        <i class="fas fa-download"></i> Download
+                        </button>
+                        <a id="downloadURL" th:href="'/pdfs/' + ${livro.codigo}" th:download="${livro.descricao}"
+                        hidden>Aqui</a>
+                        <button type="button" class="btn btn-outline-primary col-md-3 col-sm-3 col-12"
+                        onclick="seePDFOnline();"
+                        th:disabled="${livro.hasPDF()} == 'N'">
+                        <i class="far fa-eye"></i> Leitura Rápida
+                        </button>
+                        <button type="button" class="btn btn-danger col-md-3 col-sm-12 col-12"
+                        onclick="clearFeedback();"
+                        data-toggle="modal" data-target="#reportProblem">
+                        <i class="fas fa-exclamation"></i> Reportar Problema
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <hr style="width: 100vw;">
+            <div id="footer-content" class="col-12 row">
+                <h5 class="col-12 text-center"><strong>Lista de Livros Relacionados</strong></h5>
+                <div class="book-relacionado col-md-3 col-12 row" th:each="bookRelacionado : ${booksRelacionados}"
+                    th:id="${bookRelacionado.codigo}" onclick="openBook(this.id);">
+                    <div class="book-relacionado-left col-6">
+                        <img class="book-relacionado-img" th:src="'/imagens/' + ${bookRelacionado.codigo}">
+                    </div>
+                    <div class="book-relacionado-right col-6">
+                        <p class="book-relacionado-title" th:text="${bookRelacionado.descricao}"></p>
+                        <p class="book-relacionado-resumo" th:text="${bookRelacionado.resenha}"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="reportProblem" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"
+                        th:text="'Reportar problema no livro: ' + ${livro.codigo} + ' - ' + ${livro.descricao}"></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label class="sis-required" for="resumo">Resumo:</label>
+                                <input type="text" name="resumo" class="form-control" id="resumo">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <label class="sis-required" for="problema">Problema:</label>
+                                <textarea class="form-control" rows="8" name="problema" id="problema"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" onclick="sendReportProblem();"
+                        data-dismiss="modal">Enviar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>

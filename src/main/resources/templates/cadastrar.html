@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:replace="fragments/header :: header"></div>
+        <!-- Específicos -->
+    </head>
+    <body>
+        <form th:action="@{/cadastrar}" method="POST" th:object="${user}">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3>
+                    <i class="fas fa-user-tie"></i>
+                    Cadastro de Usuários
+                    </h3>
+                </div>
+                <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}" style="margin: 5px;">
+                    <h6 class="alert-heading">Houveram alguns problemas, veja abaixo:</h6>
+                    <hr>
+                    <div th:each="detailedError : ${#fields.detailedErrors()}">
+                        <span th:text="${detailedError.message}"></span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-md-3 col-sm-12 col-12">
+                            <label class="sis-required">Usuário:</label>
+                            <input type="text" class="form-control text-uppercase" id="username" name="username"
+                            th:field="${user.login}" th:value="${user.login}" autofocus required>
+                        </div>
+                        <div class="col-md-3 col-sm-12 col-12">
+                            <label class="sis-required">Senha:</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                            th:field="${user.senha}" th:value="${user.senha}" required>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <label class="sis-required" for="email">E-mail:</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                            th:field="${user.email}" th:value="${user.email}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <label class="sis-required" for="nome">Nome:</label>
+                            <input type="text" class="form-control" id="nome" name="nome"
+                            th:field="${user.nome}" th:value="${user.nome}" required>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <label for="profissao">Profissão:</label>
+                            <input type="text" class="form-control" id="profissao" name="profissao"
+                            th:field="${user.profissao}" th:value="${user.profissao}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3 col-sm-12 col-12">
+                            <label class="sis-required" for="CPF">CPF:</label>
+                            <input type="text" class="form-control cpf" id="cpf" name="cpf"
+                            th:field="${user.cpf}" th:value="${user.cpf}" required>
+                        </div>
+                        <div class="col-md-3 col-sm-12 col-12">
+                            <label class="sis-required" for="telefone">Telefone:</label>
+                            <input type="tel" class="form-control var-phone" id="telefone" name="telefone"
+                                   th:field="${user.telefone}" th:value="${user.telefone}" required>
+                        </div>
+                        <div class="col-md-6 col-sm-12 col-12">
+                            <label for="observacao">Observação:</label>
+                            <input type="text" class="form-control" id="observacao" name="observacao"
+                            th:field="${user.observacao}" th:value="${user.observacao}">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="form-row">
+                        <button class="btn btn-success col-md-2 col-sm-12 col-12">Registrar</button>
+                        <span class="col-md-8 col-sm-12 col-12"><br></span>
+                        <button class="btn btn-danger col-md-2 col-sm-12 col-12" form="return">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <form id="return" th:action="@{/login}" th:formmethod="GET"></form>
+</body>
+</html>

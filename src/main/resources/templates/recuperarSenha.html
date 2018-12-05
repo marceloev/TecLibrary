@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<!-- Tag's de responsividade -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<!-- Imagem logo-->
+		<link rel="shortcut icon" type="image/x-icon" href="../static/imgs/teclibrary.png" th:href="@{../imgs/teclibrary.png}">
+		<title>Recuperação de Senha</title>
+		<link rel="stylesheet" type="text/css" href="../static/css/main.css" th:href="@{../css/main.css}">
+		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+	</head>
+	<body>
+	<form id="return" th:action="@{/home}" th:method="GET"></form>
+	<form th:action="@{/recuperar-senha}" method="POST" id="form-main">
+		<div class="card">
+			<h5 class="card-header text-center">Recuperação de Senha</h5>
+			<div class="card-body">
+				<div class="alert alert-danger" th:if="${error}" id="error">
+					<p th:text="${error}"></p>
+				</div>
+				<div class="alert alert-info" th:if="${msg}" id="msg">
+					<p th:text="${msg}"></p>
+				</div>
+				<div class="form-row">
+					<label class="sis-help">?
+						<div class="sis-help-box">
+							<p><strong>A recuperação de senha por e-mail é dada da seguinte forma: </strong></p>
+							<p>1º O usuário inserirá, obrigatóriamente, seu usuário e seu e-mail. <strong>-Informados no cadastro-</strong>
+								<br/>
+								<small>Obs.: Caso não se recorde de seu usuário e e-mail, contate nós em
+								<a href="mailto:teclibraryapp@gmail.com">TecLibraryApp@gmail.com</a>
+								</small>
+							</p>
+							<p>2º Após o clicar em "Recuperar", o sistema irá informar ao usuário que um e-mail lhe foi enviado.
+								<br/>
+								<small>Obs.: O E-mail que será enviado, tem como destinatário o e-mail informado no passo anterior.</small>
+							</p>
+							<p>3º No E-mail recebido, conterá um código de 19 dígitos, esse código será sua nova senha.</p>
+							<hr>
+							<p>Depois, basta informar o código de 19 dígitos como a senha do seu próximo acesso e, alterar sua senha logo em seguida.</p>
+						</div>
+					</label>
+				</div>
+				<div class="form-row">
+					<div class="col-md-12 col-12">
+						<label for="login" class="sis-required">Login: </label>
+						<input type="text" class="form-control text-uppercase" id="login" name="login" autofocus required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="col-md-12 col-12">
+						<label for="email" class="sis-required">E-mail: </label>
+						<input type="email" class="form-control" id="email" name="email" placeholder="email@email.com" required>
+					</div>
+				</div>
+				<hr class="margined">
+				<div class="form-row">
+					<button type="button" onclick="retrievePasswordGO();" class="btn btn-outline-success col-md-4 col-12">Recuperar</button>
+					<span class="col-md-4 col-12"><br/></span>
+					<button form="return" class="btn btn-outline-danger col-md-4 col-12">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</form>
+</body>
+<script type="text/javascript">
+	function retrievePasswordGO() {
+		var msg = document.getElementById("msg");
+		if(msg != null) {
+			msg.hidden = true;
+		}
+		var error = document.getElementById("error");
+		if(error != null) {
+			error.hidden = true;
+		}
+		document.getElementById("form-main").submit();
+	}
+</script>
+</html>

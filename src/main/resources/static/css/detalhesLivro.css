@@ -1,0 +1,33 @@
+body { overflow-x: hidden; padding: 0; margin: 0; }
+#root, #left-content, #right-content { padding: 0px; margin: 0px; border-radius: 10px; }
+#left-content, #right-content { max-height: 500px; }
+#header-content { height: 40px; background-color: whitesmoke; margin: 0; width: 100vw; padding-top: 5px; border-bottom: solid 0.1px black; box-sizing: unset; }
+#left-content-root, #right-content-root { max-height: inherit; border-radius: inherit; padding: 3px 3px 3px 3px; }
+#left-content-root { height: 100%; }
+.detail-sinopse { font-style: italic; }
+.detail-title { font-size: 15px; font-weight: bold; }
+.detail-title-text { font-size: 14.5px; }
+.detail-options { margin-left: 0; margin-right: 0; bottom: 0px; width: 99%; }
+.detail-options button:nth-of-type(2) { margin: auto; }
+.img-detail { height: inherit; max-height: inherit; width: 100%; border-radius: inherit; }
+
+#footer-content, #footer-content .book-relacionado { padding: 0px; margin: 0px; height: 250px; max-height: 150px; }
+.book-relacionado { border: solid 1px lightgray; border-radius: 15px; cursor: pointer; }
+.book-relacionado-left { height: inherit; max-height: inherit; width: 100%; border-radius: inherit; padding: inherit; margin: inherit; }
+.book-relacionado-right { height: inherit; max-height: inherit; width: 100%; border-radius: inherit; padding: 5px; }
+.book-relacionado-img { height: inherit; max-height: inherit; width: inherit; border-radius: inherit; padding: 3px; margin: inherit; }
+.book-relacionado-title { color: cornflowerblue; font-size: 14px; text-align: center; overflow: auto; line-height: 15px; max-height: 29px; font-weight: bold;
+							margin-bottom: 5px; }
+.book-relacionado-title:hover { text-decoration: underline; }
+.book-relacionado-resumo { text-overflow: ellipsis; font-size: 11.5px; display: -webkit-box; line-height: 12.5px; overflow: auto; height: 94px; }
+
+@media (max-width:768px) {
+	.detail-options button:nth-of-type(1) { margin-bottom: 15px; }
+	.detail-options button:nth-of-type(2) { margin-bottom: 15px; }
+	#left-content, #right-content { max-height: 1000px; }
+}
+
+::-webkit-scrollbar { width: 2px; height: 2px;}
+::-webkit-scrollbar-track { background: LightGray; }
+::-webkit-scrollbar-thumb { background: DarkGray; }
+::-webkit-scrollbar-thumb:hover { background: Black; }

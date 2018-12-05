@@ -1,0 +1,53 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+             version="2.0">
+    <persistence-unit name="TecLibrary">
+        <!-- Implementação do JPA, no nosso caso Hibernate -->
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:postgresql://ec2-184-73-197-211.compute-1.amazonaws.com:5432/dcprgs8aahsd5s?useSSL=true"/>
+            <property name="javax.persistence.jdbc.user" value="yjysmvncfucgmt"/>
+            <property name="javax.persistence.jdbc.password"
+                      value="e509da78c1a79c99673f38e5f764ac796adaf73e9adf6a6471392a641f243b60"/>
+
+            <!-- Configurações específicas do Hibernate-->
+            <!--<property name="hibernate.cache.use_second_level_cache" value="false" />
+            <property name="hibernate.cache.use_query_cache" value="false"/>-->
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.connection.release_mode" value="after_transaction"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="TecLibrary_Local">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:postgresql://localhost:5432/teclibrary?useSSL=true"/>
+            <property name="javax.persistence.jdbc.user" value="teclibrary"/>
+            <property name="javax.persistence.jdbc.password" value="tecsis"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+            <property name="hibernate.connection.release_mode" value="after_transaction"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+
+    <persistence-unit name="TecLibrary_Sankhya">
+        <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <properties>
+            <property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@192.168.0.146:1521/DELPHI"/>
+            <property name="javax.persistence.jdbc.user" value="hdesnk1"/>
+            <property name="javax.persistence.jdbc.password" value="tecsis"/>
+
+            <property name="hibernate.dialect" value="org.hibernate.dialect.OracleDialect"/>
+            <property name="hibernate.connection.release_mode" value="after_transaction"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+        </properties>
+    </persistence-unit>
+</persistence>
