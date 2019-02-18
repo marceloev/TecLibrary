@@ -1,7 +1,7 @@
 # TecLibrary
 Sistema de Gerenciamento de Bibliotecas
 
-O aplicativo disponibilizado tem layout estiliazado para WebSite.
+O aplicativo disponibilizado tem layout estilizado para WebSite.
 Consta com tecnologia: Java Springboot, Thymeleaf, Bootstrap, JQuery, SGBD e afins.
 Disponibiliza as regras de Banco de dados através do arquivo "persistence.xml" e, os objetos são todos controlados por ORM.
 
